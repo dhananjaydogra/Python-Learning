@@ -42,7 +42,7 @@
 # else:
 #      print (f"{number} is an Odd number.")
 
-#Ticketing system for a rollercoster
+# #Ticketing system for a rollercoster
 
 print("\nWelcome to the Rollercoster!\n") 
 age = int(input("Enter your age: ")) 
@@ -53,6 +53,11 @@ if (height > 120):
     if (age < 12):
         bill= 5
         print("Child Tickets are $5")
+    # elif age>=45 and age<=55:
+    #     bill=0
+    elif 45 <= age <=55:    
+         bill=0
+         print("Enjoy your day you get a free ride!")
     elif (age >= 18):
         bill= 12
         print("Adult Tickets are $12")
@@ -65,3 +70,30 @@ if (height > 120):
     print(f"Your Final Bill is ${bill}")
 else:
     print("Sorry, your height doesn't meet the eligibility to take the ride.")
+
+
+
+#Pizza Delivery Program   
+
+# print("Welcome to Python Pizza Deliveries!")
+# size =input("What size of Pizza do you want? S, M or L: ")
+# pepperorni =input("Do you want pepperoni on your pizza? Y or N: ")
+# extra_cheese =input("Do you want extra cheese? Y or N: ")
+# bill=0
+
+# if (size=="S") :
+#     bill=15
+# elif (size=="M") :
+#     bill=20
+# else:
+#     bill=25
+# if pepperorni=="Y":
+#    bill+=3
+# if extra_cheese=="Y":
+#     bill+=1
+# print(f"Your final bill is: ${bill}")
+
+    
+        
+
+
