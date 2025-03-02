@@ -31,7 +31,7 @@ while lives>0:
         lives-=1
         print(f"You guessed {guess_letter}, that's not in the word. You lose a life.")
     if word_found==0:
-        print(f"You Win!!")    
+        print(f"You Win!! \nThe word is {word}")    
         lives=0
     elif lives>0:
         print(f"****************************{lives}/6 LIVES LEFT****************************")        
