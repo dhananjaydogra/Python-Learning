@@ -124,3 +124,29 @@ print(programming_dictionary["Bug"])
 for key in programming_dictionary:
     print(key)
     print(programming_dictionary[key])
+
+#Nested List in Dictionary
+travel_log = {
+    "France" : ["Paris", "Lille","Dijon"],
+    "Germany" : ["Munich", "Berlin"],
+}
+#Accessing a list in a dictionary
+print(travel_log["France"][1])
+
+
+nested_list = ["A","B",["C","D"]]
+#Acessing a list item within a list
+print(nested_list[2][1])
+
+travel_log_detail = {
+    "France": {
+        "total_visits": 8,
+        "cities_visited": ["Paris", "Lille","Dijon"],
+    },
+    "Germany":{
+        "total_visits": 3,
+        "cities_visited":["Berlin","Munich","Stuttgart"],
+    },
+}
+
+print(travel_log_detail["Germany"]["cities_visited"][2])
