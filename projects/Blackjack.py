@@ -30,13 +30,15 @@ def pick_a_card(data1):
     picked_card =random.choice(cards)
 
     # Added functionality to update scores to count Ace as 11 or 1
-    if 11 == picked_card and sum(data1['hand']) + picked_card > 21:
+    score=sum(data1['hand']) + picked_card
+    if 11 == picked_card and  score> 21:
             picked_card = 1
 
-    if 11 in data1['hand'] and sum(data1['hand']) + picked_card > 21:
+    elif 11 in data1['hand'] and score > 21:
         for i in range(len(data1['hand'])):
-            if data1['hand'][i] == 11:
+            if data1['hand'][i] == 11 and score > 21:
                 data1['hand'][i] = 1
+                score-=10
     data1['hand'].append(picked_card)
 
 
@@ -101,7 +103,6 @@ while game_continue:
             "score" : 0,
         }
         final_round = False
-        bust=False
 
         initialize_game(player_data, computer_data)
 
