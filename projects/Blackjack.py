@@ -14,18 +14,31 @@ logo = '''
 cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 
 game_continue = True
+
 user_input = ''
+
 
 def print_round_data(last_round):
     if not last_round:
-        print(f"Your cards: {player_data['hand']}, current score: {player_data['score']}")
+        print(f"\nYour cards: {player_data['hand']}, current score: {player_data['score']}")
         print(f"Computer's first card: {computer_data['hand'][0]}")
     else:
-        print(f"Your final hand: {player_data['hand']}, final score: {player_data['score']}")
-        print(f"Computer's final hand:  {computer_data['hand']}, final score: {computer_data['score']}")
+        print(f"\nYour final hand: {player_data['hand']}, final score: {player_data['score']}")
+        print(f"Computer's final hand:  {computer_data['hand']}, final score: {computer_data['score']}\n")
 
 def pick_a_card(data1):
-    data1['hand'].append(random.choice(cards))
+    picked_card =random.choice(cards)
+
+    # Added functionality to update scores to count Ace as 11 or 1
+    if 11 == picked_card and sum(data1['hand']) + picked_card > 21:
+            picked_card = 1
+
+    if 11 in data1['hand'] and sum(data1['hand']) + picked_card > 21:
+        for i in range(len(data1['hand'])):
+            if data1['hand'][i] == 11:
+                data1['hand'][i] = 1
+    data1['hand'].append(picked_card)
+
 
 
 def initialize_game(data1, data2):
@@ -37,54 +50,79 @@ def initialize_game(data1, data2):
     print_round_data(False)
 
 def computer_picks(data):
-    while data['score'] <=17:
+    while data['score'] <17:
         pick_a_card(data)
         data['score']=sum((data['hand']))
 
-#Create a Function to update scores to count Ace as 11 or 1
+
+def player_run(p_data,last_round):
+
+    # Calculate the player score
+    p_data['score'] = sum(p_data['hand'])
+    print_round_data(last_round)
+    if p_data['score'] > 21:
+        last_round = True
+    return last_round
+
 
 def game_calculation(p_data, c_data, last_round):
 
-    #Calculate the player score
-    p_data['score'] = sum(p_data['hand'])
-
-    if not last_round:
         print_round_data(last_round)
-    else:
-        print_round_data(last_round)
-        if (c_data['score'] > p_data['score'] and c_data['score'] <=21) or p_data['score'] > 21 or c_data['score'] == 21:
-            print("You lose 😤")
-        elif p_data['score'] > c_data['score'] or c_data['score'] > 21 or p_data['score'] == 21:
-            print("You win 😃")
+        if c_data['score'] == 0:
+            print("You Lose! opponent has Blackjack 😱\n")
+        elif p_data['score'] == 0:
+            print("You Win with a Blackjack 😎\n")
+        elif p_data['score'] > 21:
+            print("You went over, It's a Bust! You lose. 😭\n")
+        elif c_data['score'] > 21:
+            print("Opponent went over and got a Bust! You Win. 😁\n")
+        elif c_data['score'] > p_data['score']:
+            print("You lose 😤\n")
+        elif p_data['score'] > c_data['score']:
+            print("You win 😃\n")
         else:
-            print("It's a Draw 🙃")
+            print("It's a Draw 🙃\n")
 
 
 
 while game_continue:
-    print(logo)
-    player_data= {
-        "hand" : [],
-        "score" : 0,
-    }
-    computer_data= {
-        "hand" : [],
-        "score" : 0,
-    }
-    final_round = False
-
-    initialize_game(player_data, computer_data)
-    computer_picks(computer_data)
-    while  not final_round:
-        round_input = input("Type 'y' to get another card, type 'n' to pass: ").lower()
-        if round_input == 'y':
-            pick_a_card(player_data)
-        else:
-            final_round = True
-        game_calculation(player_data, computer_data, final_round)
-
-
     game_input = input("Do you want to play a game of Blackjack? Type 'y' or 'n': ").lower()
     if game_input == "n":
         game_continue = False
+    else:
+        print("\n" * 20)
+        print(logo)
+        player_data= {
+            "hand" : [],
+            "score" : 0,
+        }
+        computer_data= {
+            "hand" : [],
+            "score" : 0,
+        }
+        final_round = False
+        bust=False
 
+        initialize_game(player_data, computer_data)
+
+        if computer_data['score'] == 21:
+            computer_data['score'] = 0
+
+        if player_data['score'] == 21:
+            player_data['score'] = 0
+
+        if computer_data['score'] == 0 or player_data['score'] == 0:
+            final_round =True
+
+        while  not final_round:
+            round_input = input("Type 'y' to get another card, type 'n' to pass: ").lower()
+            if round_input == 'y':
+                pick_a_card(player_data)
+            else:
+                final_round = True
+            final_round = player_run(player_data, final_round)
+            
+        if  computer_data['score'] != 0:
+            computer_picks(computer_data)
+            
+        game_calculation(player_data,computer_data,final_round)
