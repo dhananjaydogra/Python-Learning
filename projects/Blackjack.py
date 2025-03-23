@@ -19,6 +19,7 @@ user_input = ''
 
 
 def print_round_data(last_round):
+    """Prints the data of the game round"""
     if not last_round:
         print(f"\nYour cards: {player_data['hand']}, current score: {player_data['score']}")
         print(f"Computer's first card: {computer_data['hand'][0]}")
@@ -27,6 +28,7 @@ def print_round_data(last_round):
         print(f"Computer's final hand:  {computer_data['hand']}, final score: {computer_data['score']}\n")
 
 def pick_a_card(data1):
+    """Selects a random card form the cards"""
     picked_card =random.choice(cards)
 
     # Added functionality to update scores to count Ace as 11 or 1
@@ -44,6 +46,7 @@ def pick_a_card(data1):
 
 
 def initialize_game(data1, data2):
+    """Initialzes the game's first round"""
     for i in range(2):
         pick_a_card(data1)
         pick_a_card(data2)
@@ -52,14 +55,14 @@ def initialize_game(data1, data2):
     print_round_data(False)
 
 def computer_picks(data):
+    """ Checsk if the computer needs more cards and updates the score"""
     while data['score'] <17:
         pick_a_card(data)
         data['score']=sum((data['hand']))
 
 
 def player_run(p_data,last_round):
-
-    # Calculate the player score
+    """ Calculate the player score"""
     p_data['score'] = sum(p_data['hand'])
     print_round_data(last_round)
     if p_data['score'] > 21:
@@ -68,7 +71,7 @@ def player_run(p_data,last_round):
 
 
 def game_calculation(p_data, c_data, last_round):
-
+        """ Calculates the game round result and prints it"""
         print_round_data(last_round)
         if c_data['score'] == 0:
             print("You Lose! opponent has Blackjack 😱\n")
